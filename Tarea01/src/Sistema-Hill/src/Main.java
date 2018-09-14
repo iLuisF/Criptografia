@@ -18,6 +18,7 @@ public class Main {
        //Matriz de decifrado de Hill.
        Matriz descifrado = new Matriz();       
        
+       //Asignamos valores a la matriz de descifrado.
        descifrado.setEntrada(0, 0, 24);
        descifrado.setEntrada(0, 1, 13);
        descifrado.setEntrada(1, 0, 19);
@@ -30,6 +31,8 @@ public class Main {
        vectores = sistema.getVectores();
        List<Vector> indices = new LinkedList<>();
        
+       //Multiplicamos cada vector de tamaño dos por la matriz de descifrado para
+       //obtener el texto claro.
        for (Vector vector : vectores) {
            Vector tmp = new Vector();
            tmp = descifrado.multiplicarVector(vector);
@@ -40,7 +43,7 @@ public class Main {
        archivos.escribir(sistema.toAlfabeto(indices), "descifrado");
    }
    
-   static String leerTextoTerminal(){
+    static String leerTextoTerminal(){
         Scanner leer = new Scanner(System.in);
         String linea = "";
         return linea = leer.nextLine();

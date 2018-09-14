@@ -6,7 +6,7 @@
  */
 public class Vector {
     
-    private int[] vector;
+    private final int[] vector;
     
     public Vector(){
         this.vector = new int[2];

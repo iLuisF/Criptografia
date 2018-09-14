@@ -1,11 +1,8 @@
 
-import com.sun.javafx.scene.control.skin.VirtualFlow;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
-
 
 /**
  *
@@ -16,17 +13,21 @@ public class Hill {
     //Texto cifrado.
     private List<String> textoCifrado;
     //Indices de cada caracter del texto claro.
-    private List<Vector> indices;
+    private final List<Vector> indices;
     //Alfabeto de 26.
-    String alfabetoMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
+    private String alfabetoMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; 
     
+    /**
+     * Contruimos un texto cifrado y las parejas de los digramas.
+     */
     public Hill(){
         this.textoCifrado = new ArrayList<>();
         this.indices = new LinkedList<>();
     }
     
     /**
-     * Lee caracteres desde la terminal.
+     * Lee caracteres desde la terminal(separandolos por un espacios)
+     * y los agrega a la lista.
      */
     public void leerTexto(String texto){
         textoCifrado = Arrays.asList(texto.split(" "));        
@@ -34,7 +35,7 @@ public class Hill {
     }
     
     /**
-     * Obtiene una lista de vectores pero correspondiendo al indice de cada 
+     * Genera una lista de vectores pero correspondiendo al indice de cada 
      * caracter.
      * 
      */
@@ -45,10 +46,22 @@ public class Hill {
         }
     }
     
+    /**
+     * Lista de vectores.
+     * 
+     * @return 
+     */
     public List getVectores(){
         return this.indices;
     }
     
+    /**
+     * Dada una lista de vectores de indices, los pasa a sus correspondientes
+     * caracteres dentro del alfabeto.
+     * 
+     * @param indices
+     * @return 
+     */
     public String toAlfabeto(List<Vector> indices){
         String resultado = "";
         for (Vector indice : indices) {
