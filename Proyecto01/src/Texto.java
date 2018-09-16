@@ -16,7 +16,7 @@ public class Texto {
     //es un vector de posiciones.
     private List<Vector> textoVectores;
     //Alfabeto de 27 caracteres
-    private final String alfabetoMayusculas = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
+    private final String alfabetoMayusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     
     public Texto(String cadena, int tamanio){
         System.out.println(cadena);

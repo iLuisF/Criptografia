@@ -1,7 +1,6 @@
 
+import java.util.Arrays;
 import java.util.LinkedList;
-import java.util.List;
-
 
 /**
  *
@@ -19,9 +18,9 @@ public class Hill {
      */
     public void cifrar(Matriz cifrado, Texto claro){
         LinkedList<Vector> indices = new LinkedList<>();
-        if(cifrado.esInvertible()){            
+        if(cifrado.esInvertible(26)){            
             for(Vector vector : claro.getTextoVectores()){
-                indices.add(cifrado.multiplicarVector(vector));
+                indices.add(cifrado.multiplicarVector(vector, 26));
             }
         } else {
             System.out.println("La matriz no es invertible.");
@@ -38,10 +37,23 @@ public class Hill {
      * 
      * 1. El determinante de la matriz debe ser diferente de 0 mod 27.
      * 
-     * @param descifrado matriz con coeficientes
-     * @param cript 
+     * @param cifrado matriz con coeficientes
+     * @param cripto 
      */
-    public void descifrar(Matriz descifrado, Texto cript){
-       
+    public void descifrar(Matriz cifrado, Texto cripto){
+       LinkedList<Vector> indices = new LinkedList<>();
+       Matriz descifrado = new Matriz(cifrado.invertirMatriz(26), 2);
+       System.out.println("Matriz de descifrado: " + Arrays.deepToString(descifrado.getMatriz()));
+       if(cifrado.esInvertible(26)){
+            for(Vector vector : cripto.getTextoVectores()){
+                indices.add(descifrado.multiplicarVector(vector, 26));                
+            }
+       } else {
+           System.out.println("La matriz no es invertible.");
+       }
+        System.out.println("Indices decifrados: ");
+        System.out.println(indices);
+        System.out.println("Texto claro: ");
+        System.out.println(cripto.toAlfabeto(indices));
     }
 }
