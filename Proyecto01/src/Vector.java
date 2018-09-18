@@ -1,11 +1,12 @@
 
 /**
- *
+ * Representación de un vector con ayuda de una matriz unidimensional.
+ * 
  * @author luis
  */
 public class Vector {
 
-    private final int[] vector;
+    private int[] vector;
     
     /**
      * 
@@ -30,5 +31,13 @@ public class Vector {
             cadena = cadena + vector[i] + " ";
         }
         return cadena;
+    }
+
+    public int[] getVector() {
+        return vector;
+    }
+    
+    public void setVector(int[] vector){
+        this.vector = vector;
     }
 }

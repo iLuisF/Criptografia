@@ -25,12 +25,12 @@ public class Main {
         Hill sistema = new Hill();        
         sistema.cifrar(cifrado, claro);        
         System.out.println("\nDescifrar...");        
-        Texto cripto = new Texto("NMKGNNECTIPJXTLTEO", 2);                
+        Texto cripto = new Texto("IEJGEDJHVIHZFDRAKU", 2);                
         sistema.descifrar(cifrado, cripto);
         
         System.out.println("\nEjemplo 2: ");        
         System.out.println("Cifrado...");        
-        Texto claro2 = new Texto("Con diez canones//", 2);                
+        Texto claro2 = new Texto("Con diez cañones//", 2);                
         //(9, 4)
         //(5, 7)
         Matriz cifrado2 = new Matriz(2);
@@ -43,7 +43,7 @@ public class Main {
         Hill sistema2 = new Hill();        
         sistema2.cifrar(cifrado2, claro2);  
         System.out.println("\nDescifrar...");        
-        Texto criptograma2 = new Texto("WEZIKQZJANWFEQ", 2);                
+        Texto criptograma2 = new Texto("XHUFHÑZJCQYEER", 2);                
         sistema.descifrar(cifrado2, criptograma2);       
     }
     

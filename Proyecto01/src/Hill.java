@@ -18,9 +18,9 @@ public class Hill {
      */
     public void cifrar(Matriz cifrado, Texto claro){
         LinkedList<Vector> indices = new LinkedList<>();
-        if(cifrado.esInvertible(26)){            
+        if(cifrado.esInvertible(27)){            
             for(Vector vector : claro.getTextoVectores()){
-                indices.add(cifrado.multiplicarVector(vector, 26));
+                indices.add(cifrado.multiplicarVector(vector, 27));
             }
         } else {
             System.out.println("La matriz no es invertible.");
@@ -42,11 +42,11 @@ public class Hill {
      */
     public void descifrar(Matriz cifrado, Texto cripto){
        LinkedList<Vector> indices = new LinkedList<>();
-       Matriz descifrado = new Matriz(cifrado.invertirMatriz(26), 2);
+       Matriz descifrado = new Matriz(cifrado.invertirMatriz(27));
        System.out.println("Matriz de descifrado: " + Arrays.deepToString(descifrado.getMatriz()));
-       if(cifrado.esInvertible(26)){
+       if(cifrado.esInvertible(27)){
             for(Vector vector : cripto.getTextoVectores()){
-                indices.add(descifrado.multiplicarVector(vector, 26));                
+                indices.add(descifrado.multiplicarVector(vector, 27));                
             }
        } else {
            System.out.println("La matriz no es invertible.");
