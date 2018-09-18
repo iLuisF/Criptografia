@@ -7,7 +7,7 @@ import java.util.LinkedList;
  * @author luis
  */
 public class Hill {
-
+    
     /**
      * Para poder cifrar el texto claro se necesita: 
      * 
@@ -56,4 +56,5 @@ public class Hill {
         System.out.println("Texto claro: ");
         System.out.println(cripto.toAlfabeto(indices));
     }
+    
 }

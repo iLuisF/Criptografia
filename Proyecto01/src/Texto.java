@@ -27,7 +27,7 @@ public class Texto {
         dividir(tamanio);
         crearVectores(tamanio);
     }
-    
+        
     /**
      * Divide el texto en conjuntos de caracteres de tamaño n.
      * Ejemplo:
@@ -141,6 +141,35 @@ public class Texto {
         this.textoVectores = textoVectores;
     }
            
-    
-    
+    /**
+     * Construye una matriz de cifrado(clave) a partir de una cadena de texto.
+     * 
+     * @param clave
+     * @return
+     */
+    public int[][] getMatrizClave(String clave){
+        clave = clave.toUpperCase();
+        int[][] rtnClave = new int[0][0];
+
+        double raizDouble = Math.sqrt( clave.length() );
+        if (raizDouble == (int)raizDouble){
+
+            int raizInt = (int)raizDouble;
+            rtnClave = new int[raizInt][raizInt];
+            int flagClave = 0;
+            for(int i=0; i<raizInt; i++){
+                for(int j=0; j<raizInt; j++){
+                    rtnClave[i][j] = alfabetoMayusculas.indexOf(clave.charAt(flagClave));
+                    flagClave++;
+                }
+            }
+
+        }
+        else{ //no es exacto la raíz cuadrada del la clave
+            System.out.println("Llave invalida, no se puede formar una matriz de NxN");
+            // rtnClave[i][j] = null;
+        }
+
+        return rtnClave;
+    }    
 }
