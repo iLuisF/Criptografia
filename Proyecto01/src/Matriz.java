@@ -1,18 +1,21 @@
 
+import java.util.Arrays;
+
+
 /**
- * Operaciones necesarias para aplicar criptografia de Hill.
- * 
+ * Operaciones necesarias para aplicar criptografia de Hill usando matrices.
+ *
  * @author luis
  */
 public class Matriz {
-    
+
     private final int[][] matriz;
     //Orden de la matriz.
     private final int dimension;
 
     /**
      * Construye una matriz de orden dado.
-     * 
+     *
      * @param dimension orden de la matriz.
      */
     public Matriz(int dimension) {
@@ -22,8 +25,8 @@ public class Matriz {
 
     /**
      * Construye una matriz partiendo de otra.
-     * 
-     * @param matriz 
+     *
+     * @param matriz
      */
     public Matriz(int[][] matriz) {
         this.matriz = matriz;
@@ -32,10 +35,10 @@ public class Matriz {
 
     /**
      * Asigna un valor a un indice de la matriz.
-     * 
+     *
      * @param renglon
      * @param columna
-     * @param valor 
+     * @param valor
      */
     public void setEntrada(int renglon, int columna, int valor) {
         this.matriz[renglon][columna] = valor;
@@ -43,7 +46,7 @@ public class Matriz {
 
     /**
      * Obtiene un valor de un indice de la matriz.
-     * 
+     *
      * @param renglon
      * @param columna
      * @return valor entero.
@@ -54,10 +57,10 @@ public class Matriz {
 
     /**
      * Multiplica un vector por una matriz modulo m.
-     * 
-     * @param vector
-     * @param modulo
-     * @return 
+     *
+     * @param vector vector con el que se multiplicara.
+     * @param modulo modulo con el que se multiplicara.
+     * @return
      */
     public Vector multiplicarVector(Vector vector, int modulo) {
         Vector vectorProducto = new Vector(this.dimension);
@@ -74,9 +77,9 @@ public class Matriz {
 
     /**
      * Comprueba si la matriz actual es invertible o no.
-     * 
+     *
      * @param modulo en el que estamos trabajando.
-     * @return 
+     * @return true si es invertible, false en otro caso.
      */
     public boolean esInvertible(int modulo) {
         boolean esInvertible = false;
@@ -86,12 +89,12 @@ public class Matriz {
         }
         return esInvertible;
     }
-    
+
     /**
      * Calcula el determinante modulo n.
      *
      * @param mod
-     * @return
+     * @return entero modulo mod.
      */
     public int calcularDeterminanteMod(int mod) {
         return calcularDeterminante(this.matriz) % mod;
@@ -99,7 +102,7 @@ public class Matriz {
 
     /**
      * Calcula el determinante de una matriz.
-     * 
+     *
      * @param matriz
      * @return entero.
      */
@@ -137,9 +140,9 @@ public class Matriz {
     /**
      * Calcula el maximo comun divisor de dos numeros.
      *
-     * @param a
-     * @param b
-     * @return
+     * @param a numero 1.
+     * @param b numero 2.
+     * @return maximo comun divisor.
      */
     public int calcularMcd(int a, int b) {
         if (b == 0) {
@@ -150,46 +153,60 @@ public class Matriz {
     }
 
     /**
-     * Invierte una matriz, la multiplica por su inverso multiplicativo y
-     * le aplica modulo n.
-     * 
-     * @param mod
-     * @return 
+     * Adjunta una matriz, la multiplica por su inverso multiplicativo y le
+     * aplica modulo n.
+     *
+     * @param mod modulo con el que estamos trabajando.
+     * @return matriz inversa.
      */
     public int[][] invertirMatriz(int mod) {
-        int[][] inversa = invertir(this.matriz);
+        int[][] inversa = adjuntar(this.matriz);
         int determinante = calcularDeterminanteMod(mod);
         System.out.println("Determinante: " + determinante);
         int inversoMultiplicativo = calcularInversoMultiplicativo(determinante);
-        System.out.println("Inverso multiplicativo: " + inversoMultiplicativo);        
+        System.out.println("Inverso multiplicativo: " + inversoMultiplicativo);
         //Modulo sin negativo. Ejemplo: (((-1 % 2) + 2) % 2)
-        for(int i = 0; i < this.dimension; i++){
-            for(int j = 0; j < this.dimension; j++){                
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = 0; j < this.dimension; j++) {
                 inversa[i][j] = (((inversoMultiplicativo * (inversa[i][j])) % mod) + mod) % mod;;
             }
         }
         return inversa;
     }
+
+    /**
+     * Saca la adjunta de una matriz.
+     *
+     * @return matriz adjunta.
+     */
+    private int[][] adjuntar(int[][] matriz) {
+        Matrix m = new Matrix(toDouble(matriz));
+        Matrix inversa = MatrixMathematics.transpose(MatrixMathematics.cofactor(m));
+        return MatrixMathematics.toInt(inversa);        
+    }
     
     /**
-     * Solo invierte una matriz.
+     * Convierte una matriz de valores enteros a dobles.
      * 
-     * @return matriz inversa.
+     * @param matint matriz de enteros.
+     * @return matriz de doubles.
      */
-    private int[][] invertir(int[][] matriz){
-        int[][] inversa = new int[2][2];        
-        inversa[0][0] = matriz[1][1];
-        inversa[1][0] = -matriz[1][0];
-        inversa[0][1] = -matriz[0][1];
-        inversa[1][1] = matriz[0][0];
-        return inversa;
+        public double[][] toDouble(int[][] matint) {
+        double[][] mat = new double[this.dimension][this.dimension];
+        for (int i = 0; i < this.dimension; i++) {
+            for (int j = 0; j < this.dimension; j++) {
+                mat[i][j] = (double) matint[i][j];
+            }
+        }
+        return mat;
     }
-       
+
+
     /**
      * Sabemos que xa congruente 1 (mod m), donde x es un inverso multiplicativo
      * modulo m de a.
      *
-     * @param num
+     * @param num determinante.
      * @return inverso multiplicativo dentro de Z 27.
      */
     private int calcularInversoMultiplicativo(int num) {
@@ -198,23 +215,32 @@ public class Matriz {
             case 1:
                 inverso = 1;
                 break;
-            case 3:
-                inverso = 1;
+            case 2:
+                inverso = 14;
+                break;
+            case 4:
+                inverso = 7;
                 break;
             case 5:
-                inverso = 21;
+                inverso = 11;
                 break;
             case 7:
-                inverso = 15;
+                inverso = 4;
                 break;
-            case 9:
-                inverso = 3;
+            case 8:
+                inverso = 17;
                 break;
-            case 11:
+            case 10:
                 inverso = 19;
                 break;
-            case 15:
-                inverso = 7;
+            case 11:
+                inverso = 5;
+                break;
+            case 13:
+                inverso = 25;
+                break;
+            case 14:
+                inverso = 2;
                 break;
             case 16:
                 inverso = 22;
@@ -223,17 +249,20 @@ public class Matriz {
                 inverso = 8;
                 break;
             case 19:
-                inverso = 11;
+                inverso = 10;
                 break;
-            case 21:
-                inverso = 5;
+            case 20:
+                inverso = 23;
                 break;
+            case 22:
+                inverso = 16;
+                break;      
             case 23:
-                inverso = 17;
-                break;
+                inverso = 20;
+                break;      
             case 25:
-                inverso = 25;
-                break;
+                inverso = 13;
+                break;             
             case 26:
                 inverso = 26;
                 break;                

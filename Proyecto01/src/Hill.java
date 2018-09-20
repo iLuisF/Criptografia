@@ -3,7 +3,8 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 /**
- *
+ * Se encarga de cifrar o descifrar texto con ayuda de una matriz de cifrado.
+ * 
  * @author luis
  */
 public class Hill {

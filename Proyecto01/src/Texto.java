@@ -3,7 +3,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
+ * Manejador de texto tanto para texto claro como para criptograma, así como
+ * la llave.
+ * 
  * @author luis
  */
 public class Texto {
@@ -18,6 +20,12 @@ public class Texto {
     //Alfabeto de 27 caracteres
     private final String alfabetoMayusculas = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ";
     
+    /**
+     * Se contruye un texto con una cadena y el tamaño con el que formaran atomos.
+     * 
+     * @param cadena criptograma o texto claro.
+     * @param tamanio tamaño de cada conjunto de caracteres.
+     */
     public Texto(String cadena, int tamanio){
         System.out.println(cadena);
         textoAlfabeto = new LinkedList<>();
@@ -28,6 +36,10 @@ public class Texto {
         crearVectores(tamanio);
     }
         
+    public Texto(){
+        
+    }
+    
     /**
      * Divide el texto en conjuntos de caracteres de tamaño n.
      * Ejemplo:
@@ -110,13 +122,19 @@ public class Texto {
      */
     public String toAlfabeto(LinkedList<Vector> indices){
         String resultado = "";
-        for (Vector indice : indices) {
-            resultado = resultado + alfabetoMayusculas.charAt(indice.getEntrada(0));
-            resultado = resultado + alfabetoMayusculas.charAt(indice.getEntrada(1));
+        for (Vector indice : indices) {            
+            for(int i = 0; i < indices.getFirst().getVector().length; i++){
+                resultado = resultado + alfabetoMayusculas.charAt(indice.getEntrada(i));
+            }
         }
         return resultado;
     }    
 
+    /**
+     * Cadena de texto donde cada n caracteres esta en un nodo.
+     * 
+     * @return nodos de n caracteres cada uno.
+     */
     public List<String> getTextoAlfabeto() {
         return textoAlfabeto;
     }
@@ -133,6 +151,12 @@ public class Texto {
         this.cadena = cadena;
     }
 
+    /**
+     * Números que corresponden a cada caracter del texto, donde cada nodo
+     * es un vector de posiciones.
+     * 
+     * @return correspondencia de caractares a numeros dentro del alfabeto.
+     */
     public List<Vector> getTextoVectores() {
         return textoVectores;
     }
@@ -167,6 +191,7 @@ public class Texto {
         }
         else{ //no es exacto la raíz cuadrada del la clave
             System.out.println("Llave invalida, no se puede formar una matriz de NxN");
+            System.out.println("Error en clase Texto: 170");
             // rtnClave[i][j] = null;
         }
 
