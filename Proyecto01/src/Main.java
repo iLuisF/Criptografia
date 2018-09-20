@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Se prueba el cifrado y descifrado de Hill con 3 ejemplos, el primero visto en
  * la tarea, el segundo visto en clase y el tercero visto en laboratrio.
  * 
- * @author luis
+ * @author Flores González Luis Brandon, Santaella Marin Hector.
  */
 public class Main {
     
