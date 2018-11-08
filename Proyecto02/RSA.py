@@ -4,6 +4,7 @@ Flores Gonzalez Luis Brandon.
 Gomez Lopez Diana Valeria
 '''
 import random
+from random import randrange, getrandbits
 
 '''
 Logaritmo de Euclides para determinar el maximo comun divisor.
@@ -41,20 +42,70 @@ def multiplicative_inverse(e, phi):
     if temp_phi == 1:
         return d + phi
 
-'''
-Prueba si un numero es primo o no.
-'''
-def is_prime(num):
+""" Prueba si un numero es primo
+        Args:
+            n -- int -- numeor a probar.
+            k -- int -- el numero de prubas para hacer.
+        return True si n es primo
+"""
+def is_prime(n, k=128):
+    # Prueba si n no es par.
+    # 2 es primo.
+    if n == 2 or n == 3:
+        return True
+    if n <= 1 or n % 2 == 0:
+        return False
+    # encuentra r y s.
+    s = 0
+    r = n - 1
+    while r & 1 == 0:
+        s += 1
+        r //= 2
+    #k pruebas
+    for _ in range(k):
+        a = randrange(2, n - 1)
+        x = pow(a, r, n)
+        if x != 1 and x != n - 1:
+            j = 1
+            while j < s and x != n - 1:
+                x = pow(x, 2, n)
+                if x == 1:
+                    return False
+                j += 1
+            if x != n - 1:
+                return False
     return True
+
+""" Generar un entero impar aleatoriamente.
+    Args:
+       length tamano del numero a generar en bits.
+    return un entero.
+"""
+def generate_prime_candidate(length):
+    # generate random bits
+    p = getrandbits(length)
+    # apply a mask to set MSB and LSB to 1
+    p |= (1 << length - 1) | 1
+    return p
+
+""" Genera un primo.
+    Args:
+       length tamano del numero a generar en bits.
+    return a prime
+"""
+def generate_prime_number(length=1024):
+    p = 4
+    # Seguir generando mientras la prueba de primalidad falla
+    while not is_prime(p, 128):
+        p = generate_prime_candidate(length)
+    return p
 
 '''
 Genera llave publica y privada.
 '''
 def generate_keypair(p, q):
-    if not (is_prime(p) and is_prime(q)):
-        raise ValueError('Ambos numeros deben ser primos.')
-    elif p == q:
-        raise ValueError('p y q no pueden ser iguales.')
+    if p == q:
+        raise ValueError('p y q no pueden ser iguales, vuelve a ejecutar el programa.')
     
     # 1) n = p*q
     n = p * q
@@ -108,11 +159,15 @@ if __name__ == '__main__':
     Detecta si el script esta corriendo directamente por el usuario.
     '''
     print "RSA Cifrado/ Descifrado"
-    p = int(raw_input("Ingresa un numero primo (17, 19, 23, etc): "))
-    q = int(raw_input("Ingresa un numero primo diferente: "))
+    #p = int(raw_input("Ingresa un numero primo (17, 19, 23, etc): "))
+    p = generate_prime_number();
+    print "Primo p: ", p
+    #q = int(raw_input("Ingresa un numero primo diferente: "))
+    q = generate_prime_number();
+    print "Primo q: ", p
     print "Generando tu llave publica/privada..."
     public, private = generate_keypair(p, q)
-    print "Tu llave publica es ", public ," y tu llave privada es ", private
+    print "Tu llave publica es ", public ,"\n y tu llave privada es ", private
     message = raw_input("Ingresa un mensaje para cifrar con tu llave privada: ")
     encrypted_msg = encrypt(private, message)
     print "Tu mensaje cifrado es: "
