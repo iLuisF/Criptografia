@@ -14,7 +14,6 @@ def gcd(a, b):
         a, b = b, a % b
     return a
 
-
 '''
 Algoritmo extendido de Euclides para encontrar el inverso multiplicativo de dos numeros.
 '''
@@ -46,13 +45,6 @@ def multiplicative_inverse(e, phi):
 Prueba si un numero es primo o no.
 '''
 def is_prime(num):
-    if num == 2:
-        return True
-    if num < 2 or num % 2 == 0:
-        return False
-    for n in xrange(3, int(num**0.5)+2, 2):
-        if num % n == 0:
-            return False
     return True
 
 '''
@@ -94,7 +86,7 @@ def encrypt(pk, plaintext):
     key, n = pk
     #Convierte cada letra en texto plano a numeros basados en el caracter usando a^b mod m
     # C    =       m      ^  e (mod n)
-    cipher = [(ord(char) ** key) % n for char in plaintext]
+    cipher = [pow(ord(char), key, n) for char in plaintext]
     #Regresa el arreglo de bytes.
     return cipher
 
@@ -106,7 +98,7 @@ def decrypt(pk, ciphertext):
     key, n = pk
     #Genera el texto plano basado en el texto cifrado y la llave usando a^b mod m.
     # m   =       c    ^   d (mod n)
-    plain = [chr((char ** key) % n) for char in ciphertext]
+    plain = [chr(pow(char, key, n)) for char in ciphertext]
     # Regresa el arreglo de bytes como una cadena.
     return ''.join(plain)
     
